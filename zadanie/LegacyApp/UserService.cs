@@ -60,10 +60,7 @@ namespace LegacyApp
                 }
             }
 
-            if (user.HasCreditLimit && user.CreditLimit < 500)
-            {
-                return false;
-            }
+            return user.HasLowCreditLimit();
 
             UserDataAccess.AddUser(user);
             return true;

@@ -11,5 +11,19 @@ namespace LegacyApp
         public string LastName { get; internal set; }
         public bool HasCreditLimit { get; internal set; }
         public int CreditLimit { get; internal set; }
+
+        public User(string firstName, string lastName, string email, DateTime dateOfBirth)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            EmailAddress = email;
+            DateOfBirth = dateOfBirth;
+            
+        }
+
+        public bool HasLowCreditLimit()
+        {
+            return !(HasCreditLimit && CreditLimit < 500);
+        }
     }
 }
