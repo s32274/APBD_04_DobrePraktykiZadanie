@@ -6,27 +6,8 @@ namespace LegacyApp
     {
         public bool AddUser(string firstName, string lastName, string email, DateTime dateOfBirth, int clientId)
         {
-            User user = new User(firstName, lastName, email, dateOfBirth, clientId,);
-
-            if (user.HasIncorrectNames()) return false;
-
-            if (!email.Contains("@") && !email.Contains("."))
-            {
-                return false;
-            }
-
             var clientRepository = new ClientRepository();
             var client = clientRepository.GetById(clientId);
-
-            var now = DateTime.Now;
-            int age = now.Year - dateOfBirth.Year;
-            if (now.Month < dateOfBirth.Month || (now.Month == dateOfBirth.Month && now.Day < dateOfBirth.Day)) age--;
-
-            if (age < 21)
-            {
-                return false;
-            }
-
             var user = new User
             {
                 Client = client,
@@ -35,8 +16,18 @@ namespace LegacyApp
                 FirstName = firstName,
                 LastName = lastName
             };
+            
+            User user = new User(firstName, lastName, firstName, lastName, email, dateOfBirth);
+
+            if (user.HasIncorrectNames()) return false;
+
+            if (user.HasIncorrectEmail()) return false;
 
             
+
+            if (user.GetAge() < 21) return false;
+            
+            user.ClassifyCreditLimit();
 
             if (user.HasLowCreditLimit()) return false;
 

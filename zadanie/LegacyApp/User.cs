@@ -49,6 +49,11 @@ namespace LegacyApp
             return string.IsNullOrEmpty(FirstName) || string.IsNullOrEmpty(LastName);
         }
 
+        public bool HasIncorrectEmail()
+        {
+            return !EmailAddress.Contains("@") && !EmailAddress.Contains(".");
+        }
+
         public void ClassifyCreditLimit()
         {
             if (Type == "VeryImportantClient")
